@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/alexeikravchuk/cesar_cli/issues"
   },
-  "homepage": "https://github.com/alexeikravchuk/cesar_cli#readme"
+  "homepage": "https://github.com/alexeikravchuk/cesar_cli#readme",
+  "dependencies": {
+    "commander": "^6.1.0",
+    "prettier": "^2.1.2"
+  }
 }
