@@ -8,7 +8,8 @@
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone https://github.com/alexeikravchuk/nodejs-course.git
+cd caesar-cipher-cli
 ```
 
 ## Installing NPM modules
@@ -19,7 +20,7 @@ npm install
 
 CLI tool accept 4 options (short alias and full name):
 
-1.  **-s, --shift**: a shift
+1.  **-s, --shift**: a shift (integer value)
 2.  **-i, --input**: an input file
 3.  **-o, --output**: an output file
 4.  **-a, --action**: an action encode/decode
@@ -27,15 +28,15 @@ CLI tool accept 4 options (short alias and full name):
 **Usage example:**
 
 ```bash
-$ node caesar_cli -a encode -s 7 -i "./input.txt" -o "./output.txt"
+$ node caesar_cli.js -a decode -s 7 -i input.txt -o output.txt
 ```
 
 ```bash
-$ node caesar_cli --action encode --shift 7 --input plain.txt --output encoded.txt
+$ node caesar_cli.js --action decode --shift 7 -i './input.txt' -o './output.txt'
 ```
 
 ```bash
-$ node caesar_cli --action decode --shift 7 --input decoded.txt --output plain.txt
+$ node caesar_cli.js --action decode --shift 7 --input input.txt --output output.txt
 ```
 
 > input.txt
@@ -43,3 +44,21 @@ $ node caesar_cli --action decode --shift 7 --input decoded.txt --output plain.t
 
 > output.txt
 > `Aopz pz zljyla. Tlzzhnl hivba "_" zftivs!`
+
+---
+
+## Самопроверка (100 баллов)
+
+Каждый пункт **10 баллов**, частичная реализация пункта **5 баллов**.
+Каждый коммит после дедлайна (за исключением коммитов в README.md) **минус 10 баллов**
+
+[x] в корне репозитория создана папка с произвольным названием (например caesar-cipher-cli, task1 и т.п.), в которой расположены файлы с кодом программы. +10 баллов
+[x] в README.md должно быть описано, как можно запустить программу из командной строки, описаны аргументы, которые можно передать приложению. +10 баллов
+[x] если переданы все аргументы, приложение читает из файла и записывает в файл зашифрованный/расшифрованный текст, при этом предыдущие записи не удаляются. +10 баллов
+[x] если не переданы обязательные аргументы, приложение передает соответствующее сообщение в process.stderr и прoцесс завершается с кодом, отличным от 0. +10 баллов
+[x] если переданы аргументы с путями к файлам, но файлы отсутствуют (или к ним невозможен доступ), приложение передает соответствующее сообщение в process.stderr и прoцесс завершается с кодом, отличным от 0. +10 баллов
+[x] если не передан аргумент с путем до файла на чтение, то чтение осуществляется из process.stdin. +10 баллов
+[x] если не передан аргумент с путем до файла на запись, то вывод осуществляется в process.stdout. +10 баллов
+[x] шифруются/дешифруются только латинские буквы, регистр сохраняется, остальные символы не изменяются. +10 баллов
+[x] если текст вводится из консоли, то программа не должна завершаться после выполнения шифровки/дешифровки введенного текста, т.е. должна быть возможность ввести еще текст. +10 баллов
+[x] кодовая база не находится в одном файле, а разделена на файлы в соответствии с выполняемыми задачами (например - функция, преобразующая строку, в отдельном файле, код, создающий transform стрим, в отдельном файле, функция для парсинга и валидации аргументов в отдельном файле и т.п.). +10 баллов
