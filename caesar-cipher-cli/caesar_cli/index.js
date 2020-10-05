@@ -3,6 +3,7 @@ const path = require('path');
 const program = require('commander');
 const CaesarCipherTransformer = require('./transformer');
 const checkArgs = require('./args-validator');
+const { pipeline } = require('stream');
 
 program.storeOptionsAsProperties(false).passCommandToAction(false);
 program.version('0.0.1');
@@ -19,12 +20,14 @@ if (checkArgs(program)) {
   const read = input
     ? fs.createReadStream(path.resolve(__dirname, '../', input))
     : process.stdin;
-  const transform = new CaesarCipherTransformer(action, shift);
+  const transform = new CaesarCipherTransformer(action, parseInt(shift, 10));
   const write = output
     ? fs.createWriteStream(path.resolve(__dirname, '../', output), {
         flags: 'a',
       })
     : process.stdout;
 
-  read.pipe(transform).pipe(write);
+  pipeline(read, transform, write, (err) =>
+    console.error(`error: unable to ${err.syscall} file`)
+  );
 }

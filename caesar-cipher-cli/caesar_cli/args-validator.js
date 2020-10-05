@@ -28,7 +28,7 @@ module.exports = function checkArgs(program) {
     if (input) {
       const inputPath = path.resolve(__dirname, '../', input);
       try {
-        fs.accessSync(inputPath, fs.F_OK);
+        fs.accessSync(inputPath, fs.constants.F_OK);
       } catch {
         console.error(`error: ${input} is a wrong path to input file!`);
         process.exit(4);
@@ -38,7 +38,7 @@ module.exports = function checkArgs(program) {
     if (output) {
       const outputPath = path.resolve(__dirname, '../', output);
       try {
-        fs.accessSync(outputPath, fs.F_OK);
+        fs.accessSync(outputPath, fs.constants.F_OK);
       } catch {
         console.error(`error: ${output} is a wrong path to output file!`);
         process.exit(5);
