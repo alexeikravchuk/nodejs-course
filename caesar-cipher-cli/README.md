@@ -32,11 +32,11 @@ $ node caesar_cli.js -a decode -s 7 -i input.txt -o output.txt
 ```
 
 ```bash
-$ node caesar_cli.js --action decode --shift 7 -i './input.txt' -o './output.txt'
+$ node caesar_cli --action decode --shift 7 -i './input.txt' -o './output.txt'
 ```
 
 ```bash
-$ node caesar_cli.js --action decode --shift 7 --input input.txt --output output.txt
+$ node caesar_cli --action decode --shift 7 --input input.txt --output output.txt
 ```
 
 > input.txt
