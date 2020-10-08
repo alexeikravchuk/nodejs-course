@@ -28,7 +28,7 @@ CLI tool accept 4 options (short alias and full name):
 **Usage example:**
 
 ```bash
-$ node caesar_cli.js -a decode -s 7 -i input.txt -o output.txt
+$ node caesar_cli -a decode -s 7 -i input.txt -o output.txt
 ```
 
 ```bash
