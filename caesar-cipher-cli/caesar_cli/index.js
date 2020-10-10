@@ -1,3 +1,4 @@
+/* eslint-disable node/no-unsupported-features/node-builtins */
 const fs = require('fs');
 const path = require('path');
 const program = require('commander');
@@ -23,11 +24,11 @@ if (checkArgs(program)) {
   const transform = new CaesarCipherTransformer(action, parseInt(shift, 10));
   const write = output
     ? fs.createWriteStream(path.resolve(__dirname, '../', output), {
-        flags: 'a',
+        flags: 'a'
       })
     : process.stdout;
 
-  pipeline(read, transform, write, (err) =>
+  pipeline(read, transform, write, err =>
     console.error(`error: unable to ${err.syscall} file`)
   );
 }

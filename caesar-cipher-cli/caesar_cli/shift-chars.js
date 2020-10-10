@@ -5,7 +5,7 @@ module.exports = function shiftChars(line, shift) {
   shift = shift % alphabet.length;
 
   return charArray
-    .map((char) => {
+    .map(char => {
       const isUpperCase = char.toLowerCase() !== char;
       const letter = char.toLowerCase();
       if (alphabet.includes(letter)) {
