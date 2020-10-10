@@ -1,4 +1,6 @@
 const User = require('../resources/users/user.model');
+const Board = require('../resources/boards/board.model');
+const Task = require('../resources/tasks/task.model');
 
 const db = {
   Users: [],
@@ -6,48 +8,49 @@ const db = {
   Tasks: [],
   fixUsersStructure: user => {
     if (user) {
-      db.Tasks.filter(task => task).forEach(
-        task => (task.userId = task.userId === user.id ? null : task.userId)
-      );
+      db.Tasks.filter(task => task).forEach(task => {
+        task.userId = task.userId === user.id ? null : task.userId;
+      });
     }
   },
   fixBoardsStructure: board => {
     if (board) {
-      db.Boards.filter(task => task && task.boardId === board.id).forEach(
+      db.Tasks.filter(task => task && task.boardId === board.id).forEach(
         task => (db.Tasks[db.Tasks.indexOf(task)] = undefined)
       );
     }
-  }
+  },
+  fixTasksStructure: () => {}
 };
 
 (() => {
   for (let i = 0; i < 3; i++) {
     db.Users.push(new User());
   }
-
-  // const board = new Board();
-  // db.Boards.push(board);
-  // db.Tasks.push(
-  //   new Task({ boardId: board.id }),
-  //   new Task({ boardId: board.id })
-  // );
+  const board = new Board();
+  db.Boards.push(board);
+  db.Tasks.push(
+    new Task({ boardId: board.id }),
+    new Task({ boardId: board.id })
+  );
 })();
 
-const getAllEnries = tableName => db[tableName].filter(entity => entity);
+const getAllEntities = tableName => {
+  return db[tableName].filter(entity => entity);
+};
 
 const getEntity = (tableName, id) => {
-  const entries = db[tableName]
+  const entities = db[tableName]
     .filter(entity => entity)
-    .filter(entity => (entity.id = id));
+    .filter(entity => entity.id === id);
 
-  if (entries.length > 1) {
-    console.error(
+  if (entities.length > 1) {
+    throw Error(
       `The DB data is damaged. Table: ${tableName}. Entity ID: ${id}`
     );
-    throw Error('The DB data is wrong');
   }
 
-  return entries[0];
+  return entities[0];
 };
 
 const removeEntity = (tableName, id) => {
@@ -58,7 +61,7 @@ const removeEntity = (tableName, id) => {
     db[tableName] = [
       ...db[tableName].slice(0, index),
       ...(db[tableName].length > index + 1
-        ? db[tableName].slice[index + 1]
+        ? db[tableName].slice(index + 1)
         : [])
     ];
   }
@@ -68,22 +71,24 @@ const removeEntity = (tableName, id) => {
 
 const saveEntity = (tableName, entity) => {
   db[tableName].push(entity);
+
   return getEntity(tableName, entity.id);
 };
 
-const updateEnrity = async (tableName, id, entity) => {
+const updateEntity = async (tableName, id, entity) => {
   const oldEntity = getEntity(tableName, id);
+  const index = db[tableName].indexOf(oldEntity);
   if (oldEntity) {
-    db[tableName][db[tableName].indexOf(oldEntity)] = { ...entity };
+    db[tableName][index] = { ...entity, id: oldEntity.id };
   }
 
   return getEntity(tableName, id);
 };
 
 module.exports = {
-  getAllEnries,
+  getAllEntities,
   getEntity,
   removeEntity,
   saveEntity,
-  updateEnrity
+  updateEntity
 };

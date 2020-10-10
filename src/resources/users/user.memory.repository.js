@@ -1,14 +1,16 @@
 const DB = require('../../utils/inMemoryDb');
+const { NOT_FOUND_ERROR } = require('../../errors/appError');
 const TABLE_NAME = 'Users';
 
 const getAll = async () => {
-  return DB.getAllEnries(TABLE_NAME);
+  return DB.getAllEntities(TABLE_NAME);
 };
 
 const get = async id => {
   const user = await DB.getEntity(TABLE_NAME, id);
+
   if (!user) {
-    throw new Error(`Couldn't find a user with id: ${id}`); // TODO: error type
+    throw new NOT_FOUND_ERROR(`Couldn't find a user with id: ${id}`);
   }
 
   return user;
@@ -16,7 +18,7 @@ const get = async id => {
 
 const remove = async id => {
   if (!(await DB.removeEntity(TABLE_NAME, id))) {
-    throw new Error(`Couldn't find a user with id: ${id}`); // TODO: error type
+    throw new NOT_FOUND_ERROR(`Couldn't find a user with id: ${id}`);
   }
 };
 
@@ -25,10 +27,12 @@ const save = async user => {
 };
 
 const update = async (id, user) => {
-  const entity = await DB.updateEnrity(TABLE_NAME, id, user);
+  const entity = await DB.updateEntity(TABLE_NAME, id, user);
   if (!entity) {
-    throw new Error(`Couldn't find a user with id: ${id}`); // TODO: error type
+    throw new NOT_FOUND_ERROR(`Couldn't find a user with id: ${id}`);
   }
+
+  return entity;
 };
 
 module.exports = { getAll, get, remove, save, update };
