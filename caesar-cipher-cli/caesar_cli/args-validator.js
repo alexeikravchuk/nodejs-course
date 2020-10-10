@@ -1,3 +1,6 @@
+/* eslint-disable no-sync */
+/* eslint-disable no-process-exit */
+/* eslint-disable node/no-unsupported-features/es-syntax */
 const fs = require('fs');
 const path = require('path');
 
@@ -9,13 +12,13 @@ module.exports = function checkArgs(program) {
     const { action, shift, input, output } = program.opts();
 
     if (!action) {
-      console.error(`error: action (encode/decode) is required!`);
+      console.error('error: action (encode/decode) is required!');
       process.exit(1);
     }
 
     if (action !== 'encode' && action !== 'decode') {
       console.error(
-        `error: action can only has the value "encode" or "decode"!`
+        'error: action can only has the value "encode" or "decode"!'
       );
       process.exit(2);
     }
